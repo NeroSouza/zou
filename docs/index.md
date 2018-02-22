@@ -131,7 +131,7 @@ Enter new password:
 Enter it again: 
 ```
 
-Then exit from the postgres client console.
+Then exit from the postgres client console. `\q` to quit.
 
 Finally, create database tables (it is required to leave the posgres console
 and to activate the Zou virtual environment):
@@ -146,7 +146,7 @@ DB_PASSWORD=yourpassword zou init_db
 Currently Redis require no extra configuration. 
 
 To remove warnings in Redis logs and improve background saving success rate,
-you can add this to `/etc/systcl.conf`:
+you can add this to `/etc/sysctl.conf`:
 
 ```
 vm.overcommit_memory = 1
@@ -197,7 +197,8 @@ After=network.target
 User=zou
 Group=www-data
 WorkingDirectory=/opt/zou
-# Append DB_USERNAME=username DB_HOST=server when default values aren't used
+# Append Environment="DB_USERNAME=username" Environment="DB_HOST=server" when default values aren't used
+# Append Environment="DB_PASSWORD=yourpassword" if you used an other password then 'mysecretpassword'
 # ffmpeg must be in PATH
 Environment="PATH=/opt/zou/zouenv/bin:/usr/bin"
 Environment="THUMBNAIL_FOLDER=/opt/zou/previews"
@@ -234,7 +235,8 @@ After=network.target
 User=zou
 Group=www-data
 WorkingDirectory=/opt/zou
-# Append DB_USERNAME=username DB_HOST=server when default values aren't used
+# Append Environment="DB_USERNAME=username" Environment="DB_HOST=server" when default values aren't used
+# Append Environment="DB_PASSWORD=yourpassword" if you used an other password then 'mysecretpassword'
 Environment="PATH=/opt/zou/zouenv/bin"
 ExecStart=/opt/zou/zouenv/bin/gunicorn -c /etc/zou/gunicorn-events.conf -b 127.0.0.1:5001 zou.event_stream:app
 
